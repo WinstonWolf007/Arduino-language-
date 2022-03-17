@@ -1,9 +1,9 @@
 # Characteristics
 
-Version: 0.0
-Name: Arduino language
-Extentions: *.adn
-But: control the aduino whit language
+- Version: 0.0
+- Name: Arduino language
+- Extentions: *.adn
+- But: control the aduino whit language
 
 # Example code (hello world)
 ```py

@@ -21,6 +21,7 @@ But: control the aduino whit language
 [6]     Output > "you are major"
 [7] }
 ```
+```py
 # Example code (structure class)
 [0] # structure class on ADN language
 [1] class $player {
@@ -34,3 +35,4 @@ But: control the aduino whit language
 [9]
 [10] $player1 = new $player > "Wolf", 10
 [11] $player1 : $move > [0, 0]
+```

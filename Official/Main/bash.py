@@ -6,12 +6,17 @@ class Command:
 
     # give information for command syntax
     def cmd_help(self, command=None) -> None:
-        print()
+        print("\thelp\n"
+              "\tls\n"
+              "\tcd <directory>\n"
+              "\tadn <project name>\n"
+              "\texit\n"
+              "\trun <file name>")
 
     # display all case or file in directory
     def lnx_ls(self, command=None) -> None:
         all_dir = os.listdir()
-        print("\n".join(all_dir))
+        print("\t"+"\n\t".join(all_dir))
 
     # change directory
     def lxn_cd(self, command: str) -> None:
@@ -56,7 +61,7 @@ def check_command(array_code: list) -> None:
     if all_command.get(array_code[0]):
         all_command.get(array_code[0])(array_code[1])
     else:
-        print(f'SyntaxError: command not find "{array_code[0]}"')
+        print(f'\tcommand no find "{array_code[0]}"')
 
 
 # get input and return a list

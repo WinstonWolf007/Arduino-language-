@@ -16,5 +16,4 @@ program.main => "main.adn" {
                 $this : $username = $username
             }
         }
-        endf
 }

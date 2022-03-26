@@ -1,0 +1,5 @@
+program.main => "test.adn" {
+    function $cmd_help <$command> {
+        Output > "The all command is [...]"
+    }
+}

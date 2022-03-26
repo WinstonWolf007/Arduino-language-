@@ -31,20 +31,42 @@ class Command:
         if file_type == 'adn':
             with open(command, 'r+') as file:
                 all_code_line = [line for line in file]
+        print(all_code_line)
         return all_code_line
 
+    # exit bash
+    def dft_exit(self, command=None) -> None:
+        exit()
 
+
+# execute command whit dict
 def check_command(array_code: list) -> None:
-    all_command = {}
-    if array_code[0] == "run":
-        print("running !")
+    command = Command()
+    array_code.append(None)
+
+    all_command = {
+        "help": command.cmd_help,
+        "ls": command.lnx_ls,
+        "cd": command.lxn_cd,
+        "adn": command.dft_adn,
+        "exit": command.dft_exit,
+        "run": command.dft_run
+    }
+
+    if all_command.get(array_code[0]):
+        all_command.get(array_code[0])(array_code[1])
+    else:
+        print(f'SyntaxError: command not find "{array_code[0]}"')
 
 
+# get input and return a list
 def inputs() -> list:
-    listCode = input(">>> ").split()
+    listCode = input('\033[90m'+os.getcwd() + "/~$ \033[0m").split()
     return listCode
 
 
+# main loop prog
 if __name__ == '__main__':
-    value = inputs()
-    check_command(value)
+    while True:
+        value = inputs()
+        check_command(value)

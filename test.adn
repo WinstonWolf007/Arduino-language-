@@ -6,12 +6,6 @@ program.main => "test.adn "
     if 1 == 1 {
         Output > "hello world"
     }
-    elif 2 == 2 {
-        Output > "hello"
-    }
-    else {
-        Output > "World"
-    }
 }
 
 Output > "salut a tous"

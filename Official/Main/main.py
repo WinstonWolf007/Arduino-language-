@@ -73,10 +73,8 @@ class Adn:
                     pass
         return new_code
 
-    def place_all_keyword_code_in_dict(self):
+    def separate_accolade_to_keyword(self):
         all_code = []
-        code = []
-        idx = 0
 
         if self.code['program.main'][0][0] == '{':
             self.code['program.main'] = self.code['program.main'][1:]
@@ -97,15 +95,14 @@ class Adn:
                     all_code.append(x[-1])
             else:
                 all_code.append(x)
-
-        print(all_code)
-        return {"program.main": ['']}
+        self.code['program.main'] = all_code
+        return self.code
 
     def run(self):
         self.code = self.cleans_code_comment()
         self.code = self.cleans_code_string()
         self.code = self.pick_main_code_and_package_code()
-        self.code = self.place_all_keyword_code_in_dict()
+        self.code = self.separate_accolade_to_keyword()
 
-        for x in self.code['program.main'][1:]:
+        for x in self.code['program.main']:
             print(x)

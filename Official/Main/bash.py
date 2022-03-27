@@ -1,3 +1,5 @@
+from Official.Main.main import Adn
+
 import os
 
 
@@ -31,13 +33,15 @@ class Command:
         self.lxn_cd("")
 
     # run adn file
-    def dft_run(self, command: str) -> list:
+    def dft_run(self, command: str) -> None:
         file_type = command.split('.')[1]
+
         if file_type == 'adn':
             with open(command, 'r+') as file:
                 all_code_line = [line for line in file]
-        print(all_code_line)
-        return all_code_line
+
+        adn = Adn(all_code_line)
+        adn.run()
 
     # exit bash
     def dft_exit(self, command=None) -> None:
@@ -70,8 +74,21 @@ def inputs() -> list:
     return listCode
 
 
+"""
+Debug and dev section...
+"""
+
+
+def auto():
+    value = ["cd ../../", 'run test.adn']
+    for x in value:
+        check_command(x.split())
+
+
 # main loop prog
 if __name__ == '__main__':
-    while True:
-        value = inputs()
-        check_command(value)
+    #while True:
+    #   value = inputs()
+    #   check_command(value)
+    auto()
+

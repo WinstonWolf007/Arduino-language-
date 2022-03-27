@@ -1,5 +1,7 @@
-program.main => "test.adn" {
-    function $cmd_help <$command> {
-        Output > "The all command is [...]"
-    }
+include "string of set" as $sos
+
+# main program
+program.main => "test.adn"
+{
+    Output > "Hello World"
 }

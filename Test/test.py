@@ -1,15 +1,21 @@
-class Player:
-    def __init__(self, health, attack, velocity):
-        self.health = health
-        self.attack = attack
-        self.velocity = velocity
+new_code['package'] = all_code
+all_code = []
 
-    def display(self):
-        print(self.health, self.attack, self.velocity)
+if x[-1] == '{' or (y < len(self.code) and self.code[y + 1][0] == '{'):
+    for i, j in enumerate(self.code[y:]):
+        if j[0] == 'program.main':
+            in_main = True
+            if j[0] == '}' or j[-1] == '}':
+                in_main = False
+        elif j[0] == '}' or j[-1] == '}':
+            in_main = False
+        elif in_main:
+            all_code.append(j)
+    new_code['program.main'] = all_code
+    all_code = []
+    # print(new_code['program.main'])
 
-
-player1 = Player(12, 4, 3)
-player2 = Player(20, 10, 2)
-
-player1.display()
-player2.display()
+    for z, q in enumerate(new_code['program.main']):
+        if q[0] in ['if', 'elif', 'else', 'for', 'while']:
+            if q[-1] == '{' or (z < len(new_code['program.main']) and new_code['program.main'][z + 1] == '{'):
+                print("'{'")

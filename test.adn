@@ -3,5 +3,10 @@ include "string of set" as $sos
 # main program
 program.main => "test.adn"
 {
-    Output > "Hello World"
+    if 1 == 1
+    {
+        Output > "hello world"
+    }
 }
+
+Output > "salut a tous"

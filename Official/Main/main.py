@@ -50,10 +50,49 @@ class Adn:
             new_code.append(all_code_line)
         return new_code
 
-    def transform_hug_code_to_dict(self):
-        return []
+    def pick_main_code_and_package_code(self):
+        new_code = {'package': [], 'program.main': []}
+        for y, x in enumerate(self.code):
+            if x[0] in ['from', 'include']:
+                new_code['package'].append(x)
+            elif x[0] == "program.main":
+                if x[-1] == '{' or (y < len(self.code)-1 and self.code[y + 1][0] == '{'):
+                    code2 = self.code
+                    code2.reverse()
+                    for m, n in enumerate(code2):
+                        if n[-1] == '}' or (m < len(self.code)-1 and self.code[m - 1][0] == '}'):
+                            pos = len(self.code)-m
+                            code2.reverse()
+                            break
+                    else:
+                        # error it missing '{' (to ends)
+                        pass
+                    new_code['program.main'] = [x for x in self.code[y+1:pos-1]]
+                else:
+                    # Error: it missing '{' (to start)
+                    pass
+        return new_code
+
+    def place_all_keyword_code_in_dict(self):
+        all_code = []
+        new_code = {}
+        accolade = 0
+
+        if self.code['program.main'][0][0] == '{':
+            self.code['program.main'] = self.code['program.main'][1:]
+
+        for y, x in enumerate(self.code['program.main']):
+            if x[0] in ["class", "elif", "else", "for", "function", "if", "while", "export"]:
+                if x[-1] == '{' or (y < len(self.code['program.main']) and self.code['program.main'][y+1][0] == '{'):
+                    accolade += 1
+
+        print(accolade)
 
     def run(self):
         self.code = self.cleans_code_comment()
         self.code = self.cleans_code_string()
-        self.code = self.transform_hug_code_to_dict()
+        self.code = self.pick_main_code_and_package_code()
+        self.code = self.place_all_keyword_code_in_dict()
+
+        # for x in self.code['program.main']:
+        #     print(x)

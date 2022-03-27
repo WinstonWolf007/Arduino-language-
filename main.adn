@@ -2,18 +2,20 @@ include {package} "string" as $str
 
 program.main => "main.adn" {
 
-    export "stringFunc" =>
+    export "stringFunc" {
         function: $pickFistEl <$txt> {
             return $txt[0]
         }
         function: $splitTxt <$txt> {
             return $str : $split > $txt
         }
+    }
 
-    export "Entity" =>
+    export "Entity" {
         class: $Player {
             function: init <$username> {
                 $this : $username = $username
             }
         }
+    }
 }

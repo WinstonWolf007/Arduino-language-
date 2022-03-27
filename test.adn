@@ -1,11 +1,16 @@
 include "string of set" as $sos
 
 # main program
-program.main => "test.adn"
+program.main => "test.adn "
 {
-    if 1 == 1
-    {
+    if 1 == 1 {
         Output > "hello world"
+    }
+    elif 2 == 2 {
+        Output > "hello"
+    }
+    else {
+        Output > "World"
     }
 }
 

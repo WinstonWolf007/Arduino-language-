@@ -75,18 +75,31 @@ class Adn:
 
     def place_all_keyword_code_in_dict(self):
         all_code = []
-        new_code = {}
-        accolade = 0
+        code = []
+        idx = 0
 
         if self.code['program.main'][0][0] == '{':
             self.code['program.main'] = self.code['program.main'][1:]
 
-        for y, x in enumerate(self.code['program.main']):
-            if x[0] in ["class", "elif", "else", "for", "function", "if", "while", "export"]:
-                if x[-1] == '{' or (y < len(self.code['program.main']) and self.code['program.main'][y+1][0] == '{'):
-                    accolade += 1
+        for x in self.code['program.main']:
+            if '{' in x or '}' in x:
+                if len(x) > 1 and x[0] in ['{', '}'] and x[-1] in ['{', '}']:
+                    all_code.append(x[0])
+                    all_code.append(x[1:-1])
+                    all_code.append([x[-1]])
+                elif len(x) == 1 and x[0] in ['{', '}']:
+                    all_code.append(x[0])
+                elif len(x) > 1 and x[0] in ["{", '}']:
+                    all_code.append(x[0])
+                    all_code.append(x[1:])
+                elif len(x) > 1 and x[-1] in ["{", '}']:
+                    all_code.append(x[:-1])
+                    all_code.append(x[-1])
+            else:
+                all_code.append(x)
 
-        print(accolade)
+        print(all_code)
+        return {"program.main": ['']}
 
     def run(self):
         self.code = self.cleans_code_comment()
@@ -94,5 +107,5 @@ class Adn:
         self.code = self.pick_main_code_and_package_code()
         self.code = self.place_all_keyword_code_in_dict()
 
-        # for x in self.code['program.main']:
-        #     print(x)
+        for x in self.code['program.main'][1:]:
+            print(x)

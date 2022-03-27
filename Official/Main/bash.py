@@ -1,4 +1,5 @@
-from Official.Main.main import Adn
+from Official.Main.cleans import Cleans
+from Official.Main.exe import Exe
 
 import os
 
@@ -40,8 +41,11 @@ class Command:
             with open(command, 'r+') as file:
                 all_code_line = [line for line in file]
 
-        adn = Adn(all_code_line)
-        adn.run()
+        # execute the function for run the code
+        cleans = Cleans(all_code_line)
+        code = cleans.run()
+        exe = Exe(code)
+        exe.run()
 
     # exit bash
     def dft_exit(self, command=None) -> None:

@@ -1,11 +1,5 @@
-include "string of set" as $sos
-
-# main program
 program.main => "test.adn "
 {
-    if 1 == 1 {
-        Output > "hello world"
-    }
+    $years = "salut tout le monde"
+    Output > $years
 }
-
-Output > "salut a tous"

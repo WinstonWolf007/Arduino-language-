@@ -1,6 +1,5 @@
-class Adn:
+class Cleans:
     def __init__(self, code):
-        self.line = 0
         self.code = code
 
     def cleans_code_comment(self):
@@ -103,6 +102,4 @@ class Adn:
         self.code = self.cleans_code_string()
         self.code = self.pick_main_code_and_package_code()
         self.code = self.separate_accolade_to_keyword()
-
-        for x in self.code['program.main']:
-            print(x)
+        return self.code

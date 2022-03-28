@@ -1,5 +1,6 @@
 program.main => "test.adn "
 {
-    $years = "salut tout le monde"
-    Output > $years
+    $years = 12
+    $yearsTow = 4
+    Output > $years * $yearsTow + 3
 }

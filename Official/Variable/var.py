@@ -1,10 +1,12 @@
 from Official.Main.error import error
+from Official.Main.mathematic import Math
 import string
 
 
 class Var:
-    def __init__(self, code):
+    def __init__(self, code, var):
         self.code = code
+        self.var = var
 
     def check_error(self):
         # check each letter in variable name

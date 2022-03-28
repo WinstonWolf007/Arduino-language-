@@ -15,7 +15,7 @@ class Exe:
 
             # check if this is variable
             if codeLine[0][0] == '$' and codeLine[1][0] == '=':
-                var = Var(codeLine)
+                var = Var(codeLine, self.data_variable)
                 if var.check_error() == 200:
                     self.data_variable[codeLine[0]] = " ".join(codeLine[2:])
             else:

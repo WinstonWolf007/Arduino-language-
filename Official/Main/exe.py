@@ -1,5 +1,7 @@
 from Official.Variable.var import Var
 from Official.Fonction.output import Output
+from Official.Condition import condition
+from Official.Main.error import error
 
 
 class Exe:
@@ -10,7 +12,7 @@ class Exe:
     def run(self):
         for codeLine in self.code['program.main']:
             exe = {
-                "Output": Output(codeLine, self.data_variable).run
+                "Output": Output(codeLine, self.data_variable).run,
             }
 
             # check if this is variable
@@ -18,6 +20,19 @@ class Exe:
                 var = Var(codeLine, self.data_variable)
                 if var.check_error() == 200:
                     self.data_variable[codeLine[0]] = " ".join(codeLine[2:])
+            elif codeLine[0] == 'if':
+                cond = condition.Condition(codeLine)
+                result = cond.run()
+                if result[0]:
+                    for codeLine2 in result[1]:
+                        try:
+                            if exe.get(codeLine2[0])():
+                                pass
+                        except:
+                            pass
             else:
-                if exe.get(codeLine[0])():
+                try:
+                    if exe.get(codeLine[0])():
+                        pass
+                except:
                     pass

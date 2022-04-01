@@ -74,7 +74,6 @@ class Cleans:
 
     def separate_accolade_to_keyword(self):
         all_code = []
-
         if self.code['program.main'][0][0] == '{':
             self.code['program.main'] = self.code['program.main'][1:]
 
@@ -97,9 +96,32 @@ class Cleans:
         self.code['program.main'] = all_code
         return self.code
 
+    def create_dict_with_keyword(self):
+        new_code = {}
+        codes = {'keyword': '', 'code': []}
+        in_func = False
+
+        for y, x in enumerate(self.code['program.main']):
+            if x[0] in ['if', 'elif', 'else']:
+                in_func = True
+            elif x == '}' and in_func:
+                new_code[" ".join(codes['keyword'])] = codes['code']
+                codes = {'keyword': '', 'code': []}
+                in_func = False
+            elif x == '{' and in_func:
+                codes['keyword'] = self.code['program.main'][y-1]
+            elif in_func:
+                codes['code'].append(x)
+            else:
+                new_code[" ".join(x)] = ''
+
+        self.code['program.main'] = new_code
+        return self.code
+
     def run(self):
         self.code = self.cleans_code_comment()
         self.code = self.cleans_code_string()
         self.code = self.pick_main_code_and_package_code()
         self.code = self.separate_accolade_to_keyword()
+        self.code = self.create_dict_with_keyword()
         return self.code

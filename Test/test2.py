@@ -1,5 +1,8 @@
-a = [1, 2, 3]
+from Official.Main.cleans import Cleans
 
-a.remove(1)
+code = ['if', '"1 1"', '==', '"1 1"']
 
-print(a)
+clean = Cleans(code)
+code = clean.cleans_code_string()
+
+print(code)

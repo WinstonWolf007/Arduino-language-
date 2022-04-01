@@ -1,5 +1,6 @@
 from Official.Main.error import error
 
+
 class Math:
     def __init__(self, calcul: str, data_variable):
         self.calcul = calcul

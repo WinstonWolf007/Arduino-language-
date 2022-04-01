@@ -1,6 +1,13 @@
 program.main => "test.adn "
 {
-    $years = 12
-    $yearsTow = 4
-    Output > $years * $yearsTow + 3
+    Output > "coucou"
+
+    if 1 == 1 {
+        Output > "hello !"
+    }
+
+    if "salut tout le monde" == 1 {
+        Output > "one == one"
+        Output > "endf"
+    }
 }

@@ -1,7 +1,11 @@
 from Official.Variable.var import Var
 from Official.Fonction.output import Output
 from Official.Condition import condition
-from Official.Main.error import error
+
+"""
+include "string" => class
+from "json" include "openFile" => function
+"""
 
 
 class Exe:
@@ -10,29 +14,24 @@ class Exe:
         self.data_variable = {}
 
     def run(self):
-        for codeLine in self.code['program.main']:
-            exe = {
-                "Output": Output(codeLine, self.data_variable).run,
-            }
-
-            # check if this is variable
-            if codeLine[0][0] == '$' and codeLine[1][0] == '=':
-                var = Var(codeLine, self.data_variable)
-                if var.check_error() == 200:
-                    self.data_variable[codeLine[0]] = " ".join(codeLine[2:])
-            elif codeLine[0] == 'if':
-                cond = condition.Condition(codeLine)
-                result = cond.run()
-                if result[0]:
-                    for codeLine2 in result[1]:
-                        try:
-                            if exe.get(codeLine2[0])():
-                                pass
-                        except:
-                            pass
-            else:
-                try:
-                    if exe.get(codeLine[0])():
-                        pass
-                except:
+        for i, codeLine in enumerate(self.code):
+            if codeLine[0] == 'include':
+                if len(codeLine) == 2:
+                    self.data_variable['$'+str(codeLine[1]).replace('"', '')] = {'package': [str(codeLine[1]).replace('"', '')+'.adn', 'all']}
+                else:
+                    # error
                     pass
+            elif codeLine[0] == 'from':
+                if len(codeLine) == 4:
+                    self.data_variable['$'+str(codeLine[3]).replace('"', '')] = {'package': [str(codeLine[1]).replace('"', '')+'.adn', codeLine[3].replace('"', '')]}
+                else:
+                    # error
+                    pass
+            elif codeLine[0] == 'program.script':
+                for line in self.code[i:]:
+                    if line[0] == 'Output':
+                        if len(line) > 2:
+                            if line[2][0] == '$':
+                                print(self.data_variable[line[2]])
+                            else:
+                                print(line[2])

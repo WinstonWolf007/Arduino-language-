@@ -91,8 +91,8 @@ def auto():
 
 # main loop prog
 if __name__ == '__main__':
-    #while True:
-    #   value = inputs()
-    #   check_command(value)
+    # while True:
+    #    value = inputs()
+    #    check_command(value)
     auto()
 

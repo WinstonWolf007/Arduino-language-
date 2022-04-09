@@ -70,14 +70,47 @@ class Cleans:
                 else:
                     # Error: it missing '{' (to start)
                     pass
+            elif x[0] == 'program.stop':
+                exit()
+            elif x[0] == 'program.debug':
+                pass
+            elif x[0] == 'program.package':
+                pass
         return new_code
+
+    def create_dict_with_keyword(self):
+        new_code = {}
+        codes = {'keyword': '', 'code': []}
+        in_func = False
+
+        for y, x in enumerate(self.code['program.main']):
+            if x[0] in ['if', 'elif', 'else', 'function', 'class']:
+                in_func = True
+            elif x == '}' and in_func:
+                new_code[" ".join(codes['keyword'])] = codes['code']
+                codes = {'keyword': '', 'code': []}
+                in_func = False
+            elif x == '{' and in_func:
+                codes['keyword'] = self.code['program.main'][y-1]
+            elif in_func:
+                codes['code'].append(x)
+            else:
+                new_code[" ".join(x)] = None
+
+        self.code['program.main'] = new_code
+        return self.code
+
+    def reload_string(self, code):
+        saveCode = self.code
+        self.code = code
+        codes = self.cleans_code_string()
+        self.code = saveCode
+        return codes
 
     def separate_accolade_to_keyword(self):
         all_code = []
-        if self.code['program.main'][0][0] == '{':
-            self.code['program.main'] = self.code['program.main'][1:]
 
-        for x in self.code['program.main']:
+        for x in self.code:
             if '{' in x or '}' in x:
                 if len(x) > 1 and x[0] in ['{', '}'] and x[-1] in ['{', '}']:
                     all_code.append(x[0])
@@ -93,35 +126,13 @@ class Cleans:
                     all_code.append(x[-1])
             else:
                 all_code.append(x)
-        self.code['program.main'] = all_code
-        return self.code
-
-    def create_dict_with_keyword(self):
-        new_code = {}
-        codes = {'keyword': '', 'code': []}
-        in_func = False
-
-        for y, x in enumerate(self.code['program.main']):
-            if x[0] in ['if', 'elif', 'else']:
-                in_func = True
-            elif x == '}' and in_func:
-                new_code[" ".join(codes['keyword'])] = codes['code']
-                codes = {'keyword': '', 'code': []}
-                in_func = False
-            elif x == '{' and in_func:
-                codes['keyword'] = self.code['program.main'][y-1]
-            elif in_func:
-                codes['code'].append(x)
-            else:
-                new_code[" ".join(x)] = ''
-
-        self.code['program.main'] = new_code
+        self.code = all_code
         return self.code
 
     def run(self):
         self.code = self.cleans_code_comment()
         self.code = self.cleans_code_string()
-        self.code = self.pick_main_code_and_package_code()
+        # self.code = self.pick_main_code_and_package_code()
         self.code = self.separate_accolade_to_keyword()
-        self.code = self.create_dict_with_keyword()
+        # self.code = self.create_dict_with_keyword()
         return self.code
